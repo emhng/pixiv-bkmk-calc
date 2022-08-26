@@ -6,7 +6,7 @@ import { FaceSmileIcon } from '@heroicons/react/24/solid';
 
 import { useRouter } from 'next/router';
 
-const BookmarkCalc = () => {
+const BookmarkCalc = ({ id }: { id: number }) => {
 	const [viewCount, setViewCount] = useState('');
 	const [bookmarkCount, setBookmarkCount] = useState('');
 	const [likeCount, setLikeCount] = useState('');
@@ -42,7 +42,7 @@ const BookmarkCalc = () => {
 				: roundedPercentWithLikes;
 
 		likesInput.push(
-			<div className="vflex">
+			<div className="vflex input-cont">
 				<label>
 					<FaceSmileIcon className="icon" />
 					いいね
@@ -61,8 +61,16 @@ const BookmarkCalc = () => {
 
 	return (
 		<div className="calc-cont vflex">
+			<h1>作品{id}</h1>
+			<div className="result">
+				<h1>ブクマ率</h1>
+				<h1 className="percent">
+					{result}
+					<span className="counter">%</span>
+				</h1>
+			</div>
 			<form>
-				<div className="vflex">
+				<div className="vflex input-cont">
 					<label>
 						<EyeIcon className="icon" />
 						閲覧数
@@ -73,7 +81,7 @@ const BookmarkCalc = () => {
 						min={1}
 					/>
 				</div>
-				<div className="vflex">
+				<div className="vflex input-cont">
 					<label>
 						<HeartIcon className="icon" />
 						ブックマーク
@@ -86,13 +94,6 @@ const BookmarkCalc = () => {
 				</div>
 				{likesInput}
 			</form>
-			<div className="result">
-				<h1>ブクマ率</h1>
-				<h1>
-					{result}
-					<span className="counter">%</span>
-				</h1>
-			</div>
 		</div>
 	);
 };

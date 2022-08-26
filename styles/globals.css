@@ -12,6 +12,7 @@ body {
 	text-rendering: optimizeSpeed;
 	line-height: 1.5;
 	overflow-x: hidden;
+	background-color: #e5e7eb;
 }
 
 /* Box sizing rules */
@@ -61,15 +62,40 @@ a {
 	flex-direction: column;
 }
 
+.wrap {
+	flex-wrap: wrap-reverse;
+}
+
+.space-btwn {
+	justify-content: space-between;
+}
+
+.row-rev {
+	flex-direction: row-reverse;
+}
+
+.small-gap {
+	gap: 1rem;
+}
+
+.small-space {
+	margin-bottom: 1rem;
+}
+
+.med-space {
+	margin-bottom: 2rem;
+}
+
 #page-cont {
-	width: 80vw;
-	margin: 0 auto;
+	width: 85vw;
+	margin: 2rem auto;
 }
 
 .calc-cont {
 	gap: 2rem;
-	justify-content: space-between;
-	width: 50%;
+	background-color: #f9fafb;
+	min-width: 30ch;
+	width: calc(85vw / 3 - 0.67rem);
 }
 
 .calc-cont,
@@ -81,8 +107,41 @@ a {
 }
 
 .result {
-	border: 2px solid #4293f3;
-	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+	border: 2px solid #1fa3fb;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.link-button {
+	display: block;
+	padding: 1rem 2rem;
+	background-color: #e4e4e7;
+	border: 2px double rgba(0, 0, 0, 0.1);
+	border-radius: 3rem;
+	width: fit-content;
+	font-weight: 700;
+}
+
+.link-button:hover {
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.link-button:active {
+	box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.08);
+}
+
+button {
+	background-color: #1fa3fb;
+	border-radius: 3rem;
+	padding: 1rem 2rem;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+button:active {
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	transform: translateY(0.1rem);
 }
 
 input {
@@ -90,7 +149,6 @@ input {
 	border-radius: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	font-size: 2rem;
-	width: 15ch;
 }
 
 .icon {
@@ -98,4 +156,38 @@ input {
 	height: 1rem;
 	margin-left: 1rem;
 	margin-right: 0.25rem;
+}
+
+nav {
+	align-items: center;
+}
+
+h1 {
+	font-size: 1.2rem;
+}
+
+h1#title {
+	font-size: 2rem;
+	color: #1fa3fb;
+}
+
+h1.percent {
+	font-size: 5rem;
+}
+
+span.counter {
+	font-size: 1.8rem;
+	margin-left: 0.5rem;
+}
+
+.input-cont {
+	margin-bottom: 2rem;
+}
+
+.input-cont:last-child {
+	margin-bottom: 0;
+}
+
+label {
+	margin-bottom: 0.5rem;
 }
