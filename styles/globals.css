@@ -64,7 +64,7 @@ a {
 }
 
 .wrap {
-	flex-wrap: wrap-reverse;
+	flex-wrap: wrap;
 }
 
 .space-btwn {

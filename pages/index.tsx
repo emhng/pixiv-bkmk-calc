@@ -20,8 +20,8 @@ const Home: NextPage = () => {
 
 	const addCalc = () =>
 		setCalculators([
-			...calculators,
-			<BookmarkCalc id={calculators.length + 1} key={calculators.length + 1} />
+			<BookmarkCalc id={calculators.length + 1} key={calculators.length + 1} />,
+			...calculators
 		]);
 
 	return (
