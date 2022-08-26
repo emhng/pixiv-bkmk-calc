@@ -152,6 +152,12 @@ input {
 	font-size: 2rem;
 }
 
+input.work-title {
+	font-size: 1.2rem;
+	font-weight: 700;
+	background-color: inherit;
+}
+
 .icon {
 	width: 1rem;
 	height: 1rem;
@@ -195,4 +201,6 @@ label {
 	margin-bottom: 0.5rem;
 	font-weight: 700;
 	color: #525252;
+	display: flex;
+	align-items: center;
 }

@@ -43,7 +43,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 
 		likesInput.push(
 			<div className="vflex input-cont">
-				<label>
+				<label htmlFor="likeCount">
 					<FaceSmileIcon className="icon" />
 					いいね
 				</label>
@@ -52,6 +52,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 					type="number"
 					min={0}
 					value={likeCount}
+					id="likeCount"
 				/>
 			</div>
 		);
@@ -59,9 +60,15 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 		result = viewCount === '' || bookmarkCount === '' ? '--' : roundedPercent;
 	}
 
+	let titlePlaceholder: string = '作品' + id;
+
 	return (
 		<div className="calc-cont vflex">
-			<h1>作品{id}</h1>
+			<input
+				className="work-title"
+				type="text"
+				placeholder={titlePlaceholder}
+			/>
 			<div className="result">
 				<h1>ブクマ率</h1>
 				<h1 className="percent">
@@ -71,7 +78,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 			</div>
 			<form>
 				<div className="vflex input-cont">
-					<label>
+					<label htmlFor="viewCount">
 						<EyeIcon className="icon" />
 						閲覧数
 					</label>
@@ -79,10 +86,11 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 						onChange={onChangeHandler(setViewCount)}
 						type="number"
 						min={1}
+						id="viewCount"
 					/>
 				</div>
 				<div className="vflex input-cont">
-					<label>
+					<label htmlFor="bookmarkCount">
 						<HeartIcon className="icon" />
 						ブックマーク
 					</label>
@@ -90,6 +98,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 						onChange={onChangeHandler(setBookmarkCount)}
 						type="number"
 						min={0}
+						id="bookmarkCount"
 					/>
 				</div>
 				{likesInput}
