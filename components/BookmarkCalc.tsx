@@ -24,10 +24,37 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 
 	const roundedPercentWithLikes: number = roundDecimal(rawPercentWithLikes);
 
-	const onChangeHandler = (setStateFn: CallableFunction) => (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		setStateFn(e.target.value);
+	const [viewCountError, setViewCountError] = useState('');
+	const [bookmarkCountError, setBookmarkCountError] = useState('');
+	const [likeCountError, setLikeCountError] = useState('');
+
+	const onChangeHandler = (
+		setStateFn: CallableFunction,
+		setErrorFn: CallableFunction
+	) => (e: React.ChangeEvent<HTMLInputElement>) => {
+		const userInput = e.target.value;
+		const inputId = e.target.id;
+
+		//Validate inputs
+		const negativeNumberRegex = /-/;
+		const isNegative = negativeNumberRegex.test(userInput);
+
+		const decimalRegex = /\./;
+		const isDecimal = decimalRegex.test(userInput);
+
+		if (inputId === 'viewCount' && userInput === '0') {
+			setErrorFn('閲覧数は1以上を入力してください');
+			setStateFn('');
+		} else if (isNegative || isDecimal) {
+			setErrorFn('自然数を入力してください');
+			setStateFn('');
+		} else if (userInput === '') {
+			setErrorFn('カンマなしで数値を入力してください');
+			setStateFn('');
+		} else {
+			setErrorFn('');
+			setStateFn(userInput);
+		}
 	};
 
 	let result: number | string;
@@ -48,12 +75,13 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 					いいね
 				</label>
 				<input
-					onChange={onChangeHandler(setLikeCount)}
+					onChange={onChangeHandler(setLikeCount, setLikeCountError)}
 					type="number"
 					min={0}
 					value={likeCount}
 					id="likeCount"
 				/>
+				<div>{likeCountError}</div>
 			</div>
 		);
 	} else {
@@ -83,11 +111,12 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 						閲覧数
 					</label>
 					<input
-						onChange={onChangeHandler(setViewCount)}
+						onChange={onChangeHandler(setViewCount, setViewCountError)}
 						type="number"
 						min={1}
 						id="viewCount"
 					/>
+					<div>{viewCountError}</div>
 				</div>
 				<div className="vflex input-cont">
 					<label htmlFor="bookmarkCount">
@@ -95,11 +124,12 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 						ブックマーク
 					</label>
 					<input
-						onChange={onChangeHandler(setBookmarkCount)}
+						onChange={onChangeHandler(setBookmarkCount, setBookmarkCountError)}
 						type="number"
 						min={0}
 						id="bookmarkCount"
 					/>
+					<div>{bookmarkCountError}</div>
 				</div>
 				{likesInput}
 			</form>
