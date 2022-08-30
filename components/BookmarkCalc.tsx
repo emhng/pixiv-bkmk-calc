@@ -28,6 +28,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 	const [bookmarkCountError, setBookmarkCountError] = useState('');
 	const [likeCountError, setLikeCountError] = useState('');
 
+	//Set state only on valid inputs
 	const onChangeHandler = (
 		setStateFn: CallableFunction,
 		setErrorFn: CallableFunction
@@ -36,24 +37,52 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 		const inputId = e.target.id;
 
 		//Validate inputs
+		const zeroRegex = /^0+(?:0)?$/;
+		const isZero = zeroRegex.test(userInput);
+
 		const negativeNumberRegex = /-/;
 		const isNegative = negativeNumberRegex.test(userInput);
 
 		const decimalRegex = /\./;
 		const isDecimal = decimalRegex.test(userInput);
 
-		if (inputId === 'viewCount' && userInput === '0') {
-			setErrorFn('閲覧数は1以上を入力してください');
-			setStateFn('');
-		} else if (isNegative || isDecimal) {
-			setErrorFn('自然数を入力してください');
-			setStateFn('');
-		} else if (userInput === '') {
-			setErrorFn('カンマなしで数値を入力してください');
+		if (
+			(inputId === 'viewCount' && isZero) ||
+			isNegative ||
+			isDecimal ||
+			userInput === ''
+		) {
 			setStateFn('');
 		} else {
-			setErrorFn('');
 			setStateFn(userInput);
+		}
+	};
+
+	//Input validation & error display while typing
+	const onInputHandler = (setErrorFn: CallableFunction) => (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const userInput = e.target.value;
+		const inputId = e.target.id;
+
+		//Validate inputs
+		const zeroRegex = /^0+(?:0)?$/;
+		const isZero = zeroRegex.test(userInput);
+
+		const negativeNumberRegex = /-/;
+		const isNegative = negativeNumberRegex.test(userInput);
+
+		const decimalRegex = /\./;
+		const isDecimal = decimalRegex.test(userInput);
+
+		if (inputId === 'viewCount' && isZero) {
+			setErrorFn('閲覧数は1以上を入力してください');
+		} else if (isNegative || isDecimal) {
+			setErrorFn('自然数を入力してください');
+		} else if (userInput === '') {
+			setErrorFn('カンマなしで数値を入力してください');
+		} else {
+			setErrorFn('');
 		}
 	};
 
@@ -112,6 +141,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 					</label>
 					<input
 						onChange={onChangeHandler(setViewCount, setViewCountError)}
+						onInput={onInputHandler(setViewCountError)}
 						type="number"
 						min={1}
 						id="viewCount"
@@ -125,6 +155,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 					</label>
 					<input
 						onChange={onChangeHandler(setBookmarkCount, setBookmarkCountError)}
+						onInput={onInputHandler(setBookmarkCountError)}
 						type="number"
 						min={0}
 						id="bookmarkCount"
