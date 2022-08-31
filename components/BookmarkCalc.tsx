@@ -6,6 +6,9 @@ import { FaceSmileIcon } from '@heroicons/react/24/solid';
 
 import { useRouter } from 'next/router';
 
+import Error from './Error';
+import NumberInput from './NumberInput';
+
 const BookmarkCalc = ({ id }: { id: number }) => {
 	const [viewCount, setViewCount] = useState('');
 	const [bookmarkCount, setBookmarkCount] = useState('');
@@ -14,6 +17,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 	const { query } = useRouter();
 	const includeLikes = !!query.likes;
 
+	//Calculate engagement percentage
 	const roundDecimal = (percent: number) => Math.round(percent * 10) / 10;
 
 	const rawPercent: number = (+bookmarkCount / +viewCount) * 100;
@@ -24,15 +28,43 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 
 	const roundedPercentWithLikes: number = roundDecimal(rawPercentWithLikes);
 
+	//Set up error states for input validation
 	const [viewCountError, setViewCountError] = useState('');
 	const [bookmarkCountError, setBookmarkCountError] = useState('');
 	const [likeCountError, setLikeCountError] = useState('');
 
+	//Input validation & error display while typing
+	const onInputHandler = (setErrorFn: CallableFunction) => (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const userInput = e.target.value;
+		const inputId = e.target.id;
+
+		//Validate inputs
+		const zeroRegex = /^0+(?:0)?$/;
+		const isZero = zeroRegex.test(userInput);
+
+		const negativeNumberRegex = /-/;
+		const isNegative = negativeNumberRegex.test(userInput);
+
+		const decimalRegex = /\./;
+		const isDecimal = decimalRegex.test(userInput);
+
+		if (inputId === 'viewCount' && isZero) {
+			setErrorFn(<Error message="閲覧数は1以上を入力してください" />);
+		} else if (isNegative || isDecimal) {
+			setErrorFn(<Error message="自然数を入力してください" />);
+		} else if (userInput === '') {
+			setErrorFn(<Error message="カンマなしで数値を入力してください" />);
+		} else {
+			setErrorFn('');
+		}
+	};
+
 	//Set state only on valid inputs
-	const onChangeHandler = (
-		setStateFn: CallableFunction,
-		setErrorFn: CallableFunction
-	) => (e: React.ChangeEvent<HTMLInputElement>) => {
+	const onChangeHandler = (setStateFn: CallableFunction) => (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		const userInput = e.target.value;
 		const inputId = e.target.id;
 
@@ -58,34 +90,6 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 		}
 	};
 
-	//Input validation & error display while typing
-	const onInputHandler = (setErrorFn: CallableFunction) => (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const userInput = e.target.value;
-		const inputId = e.target.id;
-
-		//Validate inputs
-		const zeroRegex = /^0+(?:0)?$/;
-		const isZero = zeroRegex.test(userInput);
-
-		const negativeNumberRegex = /-/;
-		const isNegative = negativeNumberRegex.test(userInput);
-
-		const decimalRegex = /\./;
-		const isDecimal = decimalRegex.test(userInput);
-
-		if (inputId === 'viewCount' && isZero) {
-			setErrorFn('閲覧数は1以上を入力してください');
-		} else if (isNegative || isDecimal) {
-			setErrorFn('自然数を入力してください');
-		} else if (userInput === '') {
-			setErrorFn('カンマなしで数値を入力してください');
-		} else {
-			setErrorFn('');
-		}
-	};
-
 	let result: number | string;
 	let likesInput = [];
 
@@ -98,20 +102,16 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 				: roundedPercentWithLikes;
 
 		likesInput.push(
-			<div className="vflex input-cont">
-				<label htmlFor="likeCount">
-					<FaceSmileIcon className="icon" />
-					いいね
-				</label>
-				<input
-					onChange={onChangeHandler(setLikeCount, setLikeCountError)}
-					type="number"
-					min={0}
-					value={likeCount}
-					id="likeCount"
-				/>
-				<div>{likeCountError}</div>
-			</div>
+			<NumberInput
+				id="likeCount"
+				icon={<FaceSmileIcon className="icon" />}
+				label="いいね"
+				onChangeHandler={onChangeHandler(setLikeCount)}
+				onInputHandler={onInputHandler(setLikeCountError)}
+				min={0}
+				errorState={likeCountError}
+				value={likeCount}
+			/>
 		);
 	} else {
 		result = viewCount === '' || bookmarkCount === '' ? '--' : roundedPercent;
@@ -134,34 +134,24 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 				</h1>
 			</div>
 			<form>
-				<div className="vflex input-cont">
-					<label htmlFor="viewCount">
-						<EyeIcon className="icon" />
-						閲覧数
-					</label>
-					<input
-						onChange={onChangeHandler(setViewCount, setViewCountError)}
-						onInput={onInputHandler(setViewCountError)}
-						type="number"
-						min={1}
-						id="viewCount"
-					/>
-					<div>{viewCountError}</div>
-				</div>
-				<div className="vflex input-cont">
-					<label htmlFor="bookmarkCount">
-						<HeartIcon className="icon" />
-						ブックマーク
-					</label>
-					<input
-						onChange={onChangeHandler(setBookmarkCount, setBookmarkCountError)}
-						onInput={onInputHandler(setBookmarkCountError)}
-						type="number"
-						min={0}
-						id="bookmarkCount"
-					/>
-					<div>{bookmarkCountError}</div>
-				</div>
+				<NumberInput
+					id="viewCount"
+					icon={<EyeIcon className="icon" />}
+					label="閲覧数"
+					onChangeHandler={onChangeHandler(setViewCount)}
+					onInputHandler={onInputHandler(setViewCountError)}
+					min={1}
+					errorState={viewCountError}
+				/>
+				<NumberInput
+					id="bookmarkCount"
+					icon={<HeartIcon className="icon" />}
+					label="ブックマーク"
+					onChangeHandler={onChangeHandler(setBookmarkCount)}
+					onInputHandler={onInputHandler(setBookmarkCountError)}
+					min={0}
+					errorState={bookmarkCountError}
+				/>
 				{likesInput}
 			</form>
 		</div>

@@ -204,3 +204,10 @@ label {
 	display: flex;
 	align-items: center;
 }
+
+.error {
+	display: flex;
+	align-items: center;
+	color: #d62400;
+	margin-top: 0.5rem;
+}
