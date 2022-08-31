@@ -10,7 +10,7 @@ import BookmarkCalc from '../components/BookmarkCalc';
 
 import { useState } from 'react';
 
-const Home: NextPage = () => {
+const EnglishHome: NextPage = () => {
 	const { query } = useRouter();
 	const includeLikes = !!query.likes;
 
@@ -27,31 +27,31 @@ const Home: NextPage = () => {
 	return (
 		<div id="page-cont">
 			<Head>
-				<title>pixivブクマ率計算ツール</title>
-				<meta name="description" content="pixivブクマ率計算ツール" />
+				<title>pixiv bookmark calculator</title>
+				<meta name="description" content="pixiv bookmark calculator" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<nav className="hflex space-btwn small-gap med-space">
 				<h1 id="title">pixiv bkmk calc</h1>
 				<div className="hflex small-gap">
-					<Link href={includeLikes ? '/' : '?likes=true'}>
+					<Link href={includeLikes ? '/en' : '?likes=true'}>
 						<a className="link-button">
-							{includeLikes ? 'いいねを除く' : 'いいねを含む'}
+							{includeLikes ? 'Remove Likes' : 'Include Likes'}
 						</a>
 					</Link>
-					<button onClick={addCalc}>作品を追加</button>
+					<button onClick={addCalc}>Add a calculator</button>
 				</div>
 			</nav>
 
 			<section className="hflex wrap small-gap">{calculators}</section>
 			<footer className="hflex">
-				<Link href="/en">
-					<a>English</a>
+				<Link href="/">
+					<a>日本語</a>
 				</Link>
 			</footer>
 		</div>
 	);
 };
 
-export default Home;
+export default EnglishHome;

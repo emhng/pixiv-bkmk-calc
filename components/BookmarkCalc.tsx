@@ -14,8 +14,9 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 	const [bookmarkCount, setBookmarkCount] = useState('');
 	const [likeCount, setLikeCount] = useState('');
 
-	const { query } = useRouter();
+	const { query, pathname } = useRouter();
 	const includeLikes = !!query.likes;
+	const isEnglish = pathname === '/en';
 
 	//Calculate engagement percentage
 	const roundDecimal = (percent: number) => Math.round(percent * 10) / 10;
@@ -51,11 +52,35 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 		const isDecimal = decimalRegex.test(userInput);
 
 		if (inputId === 'viewCount' && isZero) {
-			setErrorFn(<Error message="閲覧数は1以上を入力してください" />);
+			setErrorFn(
+				<Error
+					message={
+						isEnglish
+							? 'Please enter a number greater than 0'
+							: '閲覧数は1以上を入力してください'
+					}
+				/>
+			);
 		} else if (isNegative || isDecimal) {
-			setErrorFn(<Error message="自然数を入力してください" />);
+			setErrorFn(
+				<Error
+					message={
+						isEnglish
+							? 'Please enter a non-negative whole number'
+							: '自然数を入力してください'
+					}
+				/>
+			);
 		} else if (userInput === '') {
-			setErrorFn(<Error message="カンマなしで数値を入力してください" />);
+			setErrorFn(
+				<Error
+					message={
+						isEnglish
+							? 'Please enter only digits [0-9]'
+							: 'カンマなしで数値を入力してください'
+					}
+				/>
+			);
 		} else {
 			setErrorFn('');
 		}
@@ -105,19 +130,22 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 			<NumberInput
 				id="likeCount"
 				icon={<FaceSmileIcon className="icon" />}
-				label="いいね"
+				label={isEnglish ? 'Likes' : 'いいね'}
 				onChangeHandler={onChangeHandler(setLikeCount)}
 				onInputHandler={onInputHandler(setLikeCountError)}
 				min={0}
 				errorState={likeCountError}
 				value={likeCount}
+				key={1}
 			/>
 		);
 	} else {
 		result = viewCount === '' || bookmarkCount === '' ? '--' : roundedPercent;
 	}
 
-	let titlePlaceholder: string = '作品' + id;
+	let titlePlaceholder: string = isEnglish
+		? 'Artwork' + ' ' + id
+		: '作品' + ' ' + id;
 
 	return (
 		<div className="calc-cont vflex">
@@ -127,7 +155,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 				placeholder={titlePlaceholder}
 			/>
 			<div className="result">
-				<h1>ブクマ率</h1>
+				<h1>{isEnglish ? 'Engagment Rate' : 'ブクマ率'}</h1>
 				<h1 className="percent">
 					{result}
 					<span className="counter">%</span>
@@ -137,7 +165,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 				<NumberInput
 					id="viewCount"
 					icon={<EyeIcon className="icon" />}
-					label="閲覧数"
+					label={isEnglish ? 'View Count' : '閲覧数'}
 					onChangeHandler={onChangeHandler(setViewCount)}
 					onInputHandler={onInputHandler(setViewCountError)}
 					min={1}
@@ -146,7 +174,7 @@ const BookmarkCalc = ({ id }: { id: number }) => {
 				<NumberInput
 					id="bookmarkCount"
 					icon={<HeartIcon className="icon" />}
-					label="ブックマーク"
+					label={isEnglish ? 'Bookmarks' : 'ブックマーク'}
 					onChangeHandler={onChangeHandler(setBookmarkCount)}
 					onInputHandler={onInputHandler(setBookmarkCountError)}
 					min={0}

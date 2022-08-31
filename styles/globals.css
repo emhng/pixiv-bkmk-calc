@@ -211,3 +211,14 @@ label {
 	color: #d62400;
 	margin-top: 0.5rem;
 }
+
+footer {
+	margin-top: 4rem;
+	padding-bottom: 2rem;
+}
+
+footer > a {
+	color: #525252;
+	margin-left: auto;
+	font-weight: 700;
+}
