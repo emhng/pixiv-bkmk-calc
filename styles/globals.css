@@ -149,11 +149,11 @@ input {
 	padding: 1rem 2rem;
 	border-radius: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	font-size: 2rem;
+	font-size: clamp(1.375rem, 1.1667rem + 0.9259vw, 2rem);
 }
 
 input.work-title {
-	font-size: 1.2rem;
+	font-size: clamp(1rem, 0.9333rem + 0.2963vw, 1.2rem);
 	font-weight: 700;
 	background-color: inherit;
 }
@@ -170,7 +170,7 @@ nav {
 }
 
 h1 {
-	font-size: 1.2rem;
+	font-size: clamp(1rem, 0.9333rem + 0.2963vw, 1.2rem);
 	color: #525252;
 }
 
@@ -180,12 +180,12 @@ h1#title {
 }
 
 h1.percent {
-	font-size: 5rem;
+	font-size: clamp(3rem, 2.3333rem + 2.963vw, 5rem);
 	color: #171717;
 }
 
 span.counter {
-	font-size: 1.8rem;
+	font-size: clamp(1rem, 0.7333rem + 1.1852vw, 1.8rem);
 	margin-left: 0.5rem;
 }
 
@@ -221,4 +221,21 @@ footer > a {
 	color: #525252;
 	margin-left: auto;
 	font-weight: 700;
+}
+
+@media screen and (max-width: 1099px) {
+	.calc-cont {
+		flex-grow: 1;
+	}
+}
+
+@media screen and (max-width: 620px) {
+	nav > * {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	nav > div > * {
+		padding: 1rem;
+	}
 }

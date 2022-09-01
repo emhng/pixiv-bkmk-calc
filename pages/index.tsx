@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<nav className="hflex space-btwn small-gap med-space">
+			<nav className="hflex space-btwn small-gap med-space wrap">
 				<h1 id="title">pixiv bkmk calc</h1>
 				<div className="hflex small-gap">
 					<Link href={includeLikes ? '/' : '?likes=true'}>
