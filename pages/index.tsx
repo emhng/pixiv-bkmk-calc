@@ -33,7 +33,9 @@ const Home: NextPage = () => {
 			</Head>
 
 			<nav className="hflex space-btwn small-gap med-space wrap">
-				<h1 id="title">pixiv bkmk calc</h1>
+				<h1 className="en" id="title">
+					pixiv bkmk calc
+				</h1>
 				<div className="hflex small-gap">
 					<Link href={includeLikes ? '/' : '?likes=true'}>
 						<a className="link-button">
@@ -47,7 +49,7 @@ const Home: NextPage = () => {
 			<section className="hflex wrap small-gap">{calculators}</section>
 			<footer className="hflex">
 				<Link href="/en">
-					<a>English</a>
+					<a className="en">English</a>
 				</Link>
 			</footer>
 		</div>

@@ -25,7 +25,7 @@ const EnglishHome: NextPage = () => {
 		]);
 
 	return (
-		<div id="page-cont">
+		<div className="en" id="page-cont">
 			<Head>
 				<title>pixiv bookmark calculator</title>
 				<meta name="description" content="pixiv bookmark calculator" />
@@ -33,7 +33,9 @@ const EnglishHome: NextPage = () => {
 			</Head>
 
 			<nav className="hflex space-btwn small-gap med-space wrap">
-				<h1 id="title">pixiv bkmk calc</h1>
+				<h1 className="en" id="title">
+					pixiv bkmk calc
+				</h1>
 				<div className="hflex small-gap">
 					<Link href={includeLikes ? '/en' : '?likes=true'}>
 						<a className="link-button">
