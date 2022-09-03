@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 import BookmarkCalc from '../components/BookmarkCalc'
 
 import { useState } from 'react'
-import { clearPreviewData } from 'next/dist/server/api-utils'
 
 const githubPages = 'https://emhng.github.io/pixiv-bkmk-calc/'
 const linkPreview = githubPages + 'preview.png'
