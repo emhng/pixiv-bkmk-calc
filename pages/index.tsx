@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import Link from 'next/link';
 
@@ -29,6 +28,7 @@ const Home: NextPage = () => {
 			<Head>
 				<title>pixivブクマ率計算ツール</title>
 				<meta name="description" content="pixivブクマ率計算ツール" />
+				<meta property="og:image" content="/preview.png" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 

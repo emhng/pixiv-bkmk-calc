@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import Link from 'next/link';
 
@@ -29,6 +28,7 @@ const EnglishHome: NextPage = () => {
 			<Head>
 				<title>pixiv bookmark calculator</title>
 				<meta name="description" content="pixiv bookmark calculator" />
+				<meta property="og:image" content="/preview.png" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
