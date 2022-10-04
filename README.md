@@ -1,7 +1,7 @@
 # Pixiv Bookmark Calculator
 
 ![Preview](public/preview.png)
-Simple site to calculate your engagement rate for an artwork on Pixiv.
+Simple site to calculate the engagement rate for an artwork on Pixiv.
 [Japanese site](https://emhng.github.io/pixiv-bkmk-calc/) || [English site](https://emhng.github.io/pixiv-bkmk-calc/en)
 
 ## Running Locally
